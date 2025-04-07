@@ -1,33 +1,25 @@
-<p>Now I can render any React component on any DOM node I want using ReactDOM.render</p>
-import React, { useState } from "react";
-import UseMemo from "./UseMemo";
-import ReactMemo from "./ReactMemo";
+import React, { useMemo, useState } from "react";
 
-const App = () => {
-  const [tasks, setTasks] = useState([]);
+const UseMemo = () => {
+  const [count, setCount] = useState(0);
 
-  const onAdd = () => {
-    setTasks((prev) => [...prev, "New Todo"]);
+  const result = useMemo(() => {
+    return count * 2;
+  }, [count]);
+
+  const onIncrease = () => {
+    setCount(count + 1);
   };
   return (
-    <div id="main">
-      <h1>React.useMemo</h1>
-      <h2>My todos</h2>
-      <ul>
-        {tasks.map((i, index) => (
-          <li key={index}>{i}</li>
-        ))}
-      </ul>
-
-      <button onClick={onAdd}>Add Todo</button>
-
-      <hr />
-      <UseMemo />
-      <hr />
-      <hr />
-      <ReactMemo />
+    <div>
+      <div>
+        <span>Count:{count}</span>
+        <button onClick={onIncrease}>+</button>
+      </div>
+      <h2>Expensive Calculation</h2>
+      {result}
     </div>
   );
 };
 
-export default App;
+export default UseMemo;
